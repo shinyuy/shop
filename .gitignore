@@ -1,5 +1,5 @@
 /node_modules
 /build
-/client/node_modules
+/shop/node_modules
 
 .env

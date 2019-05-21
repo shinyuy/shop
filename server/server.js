@@ -8,10 +8,10 @@ require('dotenv').config();
 const port = process.env.PORT || 8000;
 
 // Connect to database
-const dbRoute = process.env.DATABASE;
-mongoose.connect(
+const dbRoute = 'mongodb://shop:shop123@ds143156.mlab.com:43156/shop';
+mongoose.connect( 
   dbRoute,
-  { useNewUrlParser: true }
+  { useNewUrlParser: true } 
 );
 let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
