@@ -2,16 +2,15 @@ import React from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Product from './components/product/Product';
+import ProductList from './components/products/ProductList';
+import Home from './components/home/Home';
 
 function App() {
   return (
     <div className=''>
       <Navbar />
-      <Product />
-      <Product />
-      <Product />
-      <Product />
+      <Home />
+      <ProductList />
       <Footer />
     </div>
   );
