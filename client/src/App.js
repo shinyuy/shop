@@ -5,7 +5,7 @@ import Footer from "./components/layout/Footer";
 import ProductList from "./components/products/ProductList";
 import Home from "./components/home/Home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ProductDetails from "./components/product/ProductDetails";
+import ProductDetails from "./components/products/ProductDetails";
 import AddProduct from "./components/admin/AddProduct";
 import Cart from "./components/cart/Cart";
 import Checkout from "./components/checkout/Checkout";

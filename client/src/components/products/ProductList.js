@@ -1,16 +1,26 @@
-import React, { Component } from 'react'
-import Product from "../product/Product";
+import React, { Component } from "react";
+import Product from "./Product";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default class ProductList extends Component {
   render() {
     return (
       <div>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        <Row>
+          <Col>
+            <Product />
+          </Col>
+          <Col>
+            <Product />
+          </Col>
+          <Col>
+            <Product />
+          </Col>
+          <Col>
+            <Product />
+          </Col>
+        </Row>
       </div>
     );
   }
