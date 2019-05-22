@@ -4,7 +4,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 import '../layout/layout.css';
 
-function Home() {
+function Home(props) {
   return (
     <div>
       <Jumbotron className="home" style={{backgroundImage: `url(${girl})`}}>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, NavLink } from 'react-router-dom';
 import "./layout.css";
 
 export default class Navbar extends Component {
@@ -9,34 +10,34 @@ export default class Navbar extends Component {
             <nav className="main-header__nav">
               <ul className="main-header__item-list">
                 <li className="main-header__item">
-                  <a className="" href="/">
+                  <Link className="" to="/">
                     Shop
-                  </a>
+                  </Link>
                 </li>
                 <li className="main-header__item">
-                  <a className="active" href="/products">
+                  <Link className='' to="/products">
                     Products
-                  </a>
+                  </Link>
                 </li>
                 <li className="main-header__item">
-                  <a className="" href="/cart">
+                  <Link className="" to="/cart">
                     Cart
-                  </a>
+                  </Link>
                 </li>
                 <li className="main-header__item">
-                  <a className="" href="/orders">
+                  <Link className="" to="/admin/orders">
                     Orders
-                  </a>
+                  </Link>
                 </li>
                 <li className="main-header__item">
-                  <a className="" href="/add-product">
-                    Add Product
-                  </a>
+                  <Link className="" to="/register_login">
+                    Register/Login
+                </Link>
                 </li>
                 <li className="main-header__item">
-                  <a className="" href="/admin/products">
+                  <Link className="" to="/admin/addproduct">
                     Admin Products
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
