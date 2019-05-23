@@ -68,9 +68,9 @@ export default class ProductList extends Component {
                       <Card.Body>
                         <Card.Title>{dat.title}</Card.Title>
                         <Card.Text>
-                          {dat.description}
-                          <br />
                           {dat.price} XAF
+                          <br />
+                          {dat.description} 
                         </Card.Text>
                         <Button variant="primary" style={{marginRight: '4px'}}><Link to={'/product/' + dat._id}>Details</Link></Button>
                         <Button variant="primary">Add to Cart</Button>

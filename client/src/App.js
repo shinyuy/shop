@@ -29,7 +29,7 @@ class App extends Component {
             <Route path="/product/:_id" component={ProductDetails} />
             <Route path="/products" component={ProductList} />
             <Route path="/admin/addproduct" component={AddProduct} />
-            <Route path="/admin/editproduct" component={EditProduct} />
+            <Route path="/admin/editproduct/:_id" component={EditProduct} />
             <Route path="/admin/orders" component={Orders} />
             <Route component={NotFound} />
           </Switch>

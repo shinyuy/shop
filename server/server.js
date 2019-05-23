@@ -29,7 +29,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(logger('dev'));  
+app.use(logger('dev'));   
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -42,9 +42,9 @@ router.get("/getproduct", (req, res) => {
   Product.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
-  });
+  }); 
   console.log()  
-}); 
+});  
 
 // this our get method for a single applicant this method fetches a single data object by id from the database.
 router.get("/getproduct/:id", (req, res) => {
@@ -52,8 +52,35 @@ router.get("/getproduct/:id", (req, res) => {
   Product.findById(id, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
-  });
+  });    
 });
+
+router.post("/updateproduct/:id", (req, res) => {
+ 
+  let id = req.params.id;
+  const { title, price, description, categories, images } = req.body;
+  Product.findById(id, (err, data) => {
+    let product = data;
+    if (!data)
+      res.status(404).send("data is not found");
+
+    else if (!title || !price || !description || !categories )
+      return res.json({
+        success: false,
+        error: "INVALID INPUTS"
+      });
+    else                    
+      product.title = title;
+      product.price = price;
+      product.description = description;
+      product.categories = categories;
+      product.images = images;
+      product.save(err => {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true });
+    });
+  })
+})
 
 router.post('/images/uploadimage', formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {
