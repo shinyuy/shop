@@ -3,6 +3,7 @@ import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { Link } from 'react-router-dom';
 
 export default class ProductList extends Component {
   state = {
@@ -69,9 +70,9 @@ export default class ProductList extends Component {
                         <Card.Text>
                           {dat.description}
                           <br />
-                          {dat.price}
+                          {dat.price} XAF
                         </Card.Text>
-                        <Button variant="primary" style={{marginRight: '4px'}}>Details</Button>
+                        <Button variant="primary" style={{marginRight: '4px'}}><Link to={'/product/' + dat._id}>Details</Link></Button>
                         <Button variant="primary">Add to Cart</Button>
                       </Card.Body>
                     </Card>

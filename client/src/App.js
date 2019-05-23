@@ -26,7 +26,7 @@ class App extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/register_login" component={RegisterLogin} />
-            <Route path="/product/:id" component={ProductDetails} />
+            <Route path="/product/:_id" component={ProductDetails} />
             <Route path="/products" component={ProductList} />
             <Route path="/admin/addproduct" component={AddProduct} />
             <Route path="/admin/editproduct" component={EditProduct} />

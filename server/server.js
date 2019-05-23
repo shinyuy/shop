@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require("morgan");
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
-var cors = require('cors');
+var cors = require('cors'); 
 const Product = require("./models/product");
 const app = express(); 
 const mongoose = require('mongoose');
@@ -19,7 +19,7 @@ app.use(cors());
 const dbRoute = `mongodb://${process.env.dbName}:${process.env.dbPassword}@ds143156.mlab.com:43156/shop`;
 mongoose.connect( 
   dbRoute,
-  { useNewUrlParser: true } 
+  { useNewUrlParser: true }  
 );
 let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
@@ -29,13 +29,13 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(logger('dev')); 
+app.use(logger('dev'));  
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
-});
+}); 
 
 // this is our get method this method fetches all available data in our database
 router.get("/getproduct", (req, res) => {
@@ -43,8 +43,17 @@ router.get("/getproduct", (req, res) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
-  console.log()
+  console.log()  
 }); 
+
+// this our get method for a single applicant this method fetches a single data object by id from the database.
+router.get("/getproduct/:id", (req, res) => {
+  let id = req.params.id;
+  Product.findById(id, (err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
 
 router.post('/images/uploadimage', formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {

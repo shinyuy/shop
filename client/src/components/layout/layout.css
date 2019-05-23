@@ -114,6 +114,15 @@ form {
   color: white;
   border-radius: 3px;
 }
+.drop {
+  background-color: #00695c;
+}
+.dropitem{
+  color: white;
+}
+.dropitem:hover {
+  color: #00695c;
+}
 
 #side-menu-toggle {
   border: 1px solid white;
