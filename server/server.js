@@ -29,13 +29,22 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(logger('dev'));
+app.use(logger('dev')); 
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
 });
+
+// this is our get method this method fetches all available data in our database
+router.get("/getproduct", (req, res) => {
+  Product.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+  console.log()
+}); 
 
 router.post('/images/uploadimage', formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {
