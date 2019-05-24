@@ -26,8 +26,6 @@ export default class ProductList extends Component {
     }
   }
 
-  // never let a process live forever
-  // always kill a process everytime we are done using it
   componentWillUnmount() {
     if (this.state.intervalIsSet) {
       clearInterval(this.state.intervalIsSet);
@@ -35,12 +33,10 @@ export default class ProductList extends Component {
     }
   }
 
-  // our first get method that uses our backend api to
-  // fetch data from our data base
   getDataFromDb = () => {
     axios
       .get("http://localhost:8000/api/getproduct")
-      .then(res => this.setState({ data: res.data }))
+      .then(res => this.setState({ data: res.data}))
       .catch(function(error) {
         console.log(error);
       });
@@ -48,13 +44,13 @@ export default class ProductList extends Component {
   };
 
   render() {
-    const { data } = this.state;
+    //const { data } = this.state;
     return (
       <div>
         <Row>
-          {data.length <= 0
+          {this.state.data.length <= 0
             ? `Loading Products...`
-            : data.data.map(function(dat, i) {
+            : this.state.data.data.map(function(dat, i) {
                 return (
                   <div key={i}>
                     <Card
@@ -72,8 +68,8 @@ export default class ProductList extends Component {
                           <br />
                           {dat.description} 
                         </Card.Text>
-                        <Button variant="primary" style={{marginRight: '2px'}}><Link to={'/product/' + dat._id}>Details</Link></Button>
-                        <Button variant="primary" style={{marginRight: ''}}><Link to={'/admin/editproduct/' + dat._id}>Edit Product Info</Link></Button>
+                        <Button variant="primary" style={{marginRight: '2px'}}><Link to={'/admin/product/' + dat._id}>Details</Link></Button>
+                        <Button variant="primary" style={{marginRight: '2px'}}><Link to={'/admin/editproduct/' + dat._id}>Edit</Link></Button>
                       </Card.Body>
                     </Card>
                   </div>
