@@ -163,14 +163,14 @@ router.get('/auth', auth, (req, res)=>{
 
 
  router.post("/register", (req, res) => {
-    const user = new User(req.body);
-    user.save((err, doc) => {
-      if(err) return res.json({success: false, err});
-      res.status(200).json({
-        success: true,
-        userData: doc
-      })
-    })
+   const user = new User(req.body);
+   user.save((err, doc) => {
+     if (err) return res.json({ success: false, err });
+     res.status(200).json({
+       success: true,
+       userData: doc
+     });
+   }); 
  });
 
  router.post('/login', (req, res)=>{
@@ -209,5 +209,5 @@ router.get('/logout', auth,(req, res)=>{
 app.use("/api", router);
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+  console.log(`Server running on port ${port}`)
+})

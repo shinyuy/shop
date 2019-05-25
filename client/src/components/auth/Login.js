@@ -1,43 +1,126 @@
 import React, { Component } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import axios from "axios";
 
-export default class Login extends Component {
+export default class Register extends Component {
+  state = {
+    email: "",
+    password: "",
+    success: false,
+    errorMessage: false
+  };
+
+  register = (email, password) => {
+    axios
+      .post("http://localhost:8000/api/login", {
+        email: this.state.email,
+        password: this.state.password
+      })
+      .then(res => {
+          if(res.loginSuccess === true){
+               this.props.history.push('/products')
+          }else{
+              this.setState({
+                  errorMessage: true
+              })
+          }
+       
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          errorMessage: true
+        });
+      });
+  };
+
+  handleChange = e => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+    this.register(this.state);
+  };
+
   render() {
-    return (
-      <div style={{margin: '20px'}}>
-        <Container>
-            <Row>
-                <Col></Col>
-                <Col><h3>Registered ? Login!</h3></Col>
-                <Col></Col>     
-            </Row>
-          <Row>
-              <Col>
-            <Form >
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+    const { email, password } = this.state;
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group controlId="formBasicChecbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-              <Button variant="primary" type="submit" style={{margin: '20px'}}>
-                Submit
-              </Button>
-            </Form>
-            ;
+    return (
+      <div style={{ margin: "20px" }}>
+        <Container>
+          <Row>
+            <Col />
+            <Col>
+              <h3>Not registered ? Register!</h3>
+            </Col>
+            <Col />
+          </Row>
+
+          <Row>
+            <div style={{ color: "red" }}>
+              {this.state.errorMessage === true
+                ? "Login Unsuccessful, email or password incorrect"
+                : ""}
+            </div>
+          </Row>
+
+          <Row>
+            <Col>
+              <form onSubmit={this.handleSubmit}>
+                <Row>
+                  <Col>
+                    <label htmlFor="">Email</label>
+                    <input
+                      className="form-control"
+                      type="email"
+                      value={email}
+                      id="email"
+                      name="email"
+                      onChange={this.handleChange}
+                      required
+                      placeholder="Enter Email Address"
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <label htmlFor="">Password</label>
+                    <input
+                      className="form-control"
+                      type="password"
+                      value={password}
+                      id="password"
+                      name="password"
+                      onChange={this.handleChange}
+                      required
+                      placeholder="Enter Password"
+                    />
+                  </Col>
+                </Row>
+
+                <button
+                  type="submit"
+                  className="btn btn-secondary"
+                  style={{ marginTop: "20px" }}
+                >
+                  Login
+                </button>
+
+                <div style={{ color: "red" }}>
+              {this.state.errorMessage === true
+                ? "Login Unsuccessful, email or password incorrect"
+                : ""}
+            </div>
+              </form>
             </Col>
           </Row>
         </Container>

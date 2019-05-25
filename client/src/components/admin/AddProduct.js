@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import File from './File';
-import './adminproduct.css';
+import React, { Component } from "react";
+import axios from "axios";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import File from "./File";
+import "./adminproduct.css";
 
 export default class AddProduct extends Component {
   state = {
@@ -32,20 +32,21 @@ export default class AddProduct extends Component {
         categories: this.state.categories,
         images: this.state.images
       })
-      .then(res => console.log(res.product));
-    this.setState({
-      title: "",
-      price: "",
-      description: "",
-      categories: "",
-      images: [],
-      validated: false,
-      intervalIsSet: false,
-      idToDelete: null,
-      idToUpdate: null,
-      objectToUpdate: null,
-      success: true
-    });
+      .then(res => {
+        this.setState({
+          title: "",
+          price: "",
+          description: "",
+          categories: "",
+          images: [],
+          validated: false,
+          intervalIsSet: false,
+          idToDelete: null,
+          idToUpdate: null,
+          objectToUpdate: null,
+          success: true
+        });
+      });
   };
 
   handleChange = e => {
@@ -73,22 +74,18 @@ export default class AddProduct extends Component {
       <Container style={{ paddingTop: "60px", paddingBottom: "150px" }}>
         <Row>
           <div style={{ color: "green" }}>
-            {this.state.success === true
-              ? "Product added succesfully"
-              : ""}
+            {this.state.success === true ? "Product added succesfully" : ""}
           </div>
-          <h2>
-           Add Product
-          </h2>
+          <h2>Add Product</h2>
         </Row>
-        
-          <Row>
-            <File
-              imagesHandler={images => this.imagesHandler(images)}
-              reset={this.state.formSuccess}
-            />
-          </Row>
-          <form onSubmit={this.handleSubmit}>
+
+        <Row>
+          <File
+            imagesHandler={images => this.imagesHandler(images)}
+            reset={this.state.formSuccess}
+          />
+        </Row>
+        <form onSubmit={this.handleSubmit}>
           <Row>
             <Col>
               <label htmlFor="title">Product Title</label>
@@ -98,6 +95,7 @@ export default class AddProduct extends Component {
                 value={title}
                 id="title"
                 name="title"
+                required
                 onChange={this.handleChange}
                 placeholder="Enter Product Title"
               />
@@ -153,9 +151,7 @@ export default class AddProduct extends Component {
           </button>
         </form>
         <div style={{ color: "green" }}>
-          {this.state.success === true
-            ? "Product added succesfully"
-            : ""}
+          {this.state.success === true ? "Product added succesfully" : ""}
         </div>
       </Container>
     );

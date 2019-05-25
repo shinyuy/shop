@@ -59,7 +59,7 @@ export default class Navbar extends Component {
                   <Dropdown.Menu className='drop'>
                     <Dropdown.Item className='dropitem' href="/login">Login</Dropdown.Item>
                     <Dropdown.Item className='dropitem' href="/register">Register</Dropdown.Item>
-                    <Dropdown.Item className='dropitem' href="#/action-3">
+                    <Dropdown.Item className='dropitem'>
                       Logout
                     </Dropdown.Item>
                   </Dropdown.Menu>
