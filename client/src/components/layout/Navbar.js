@@ -30,11 +30,6 @@ export default class Navbar extends Component {
                   Orders
                 </Link>
               </li>
-              <li className="main-header__item">
-                <Link className="" to="/register_login">
-                  Register/Login
-                </Link>
-              </li>
               <Dropdown>
                   <Dropdown.Toggle variant="warning" id="dropdown-basic">
                     Categories
@@ -56,6 +51,20 @@ export default class Navbar extends Component {
                   Admin Products
                 </Link>
               </li>
+              <Dropdown style={{marginLeft: '20rem'}}>
+                  <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                    Register/Login
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className='drop'>
+                    <Dropdown.Item className='dropitem' href="/login">Login</Dropdown.Item>
+                    <Dropdown.Item className='dropitem' href="/register">Register</Dropdown.Item>
+                    <Dropdown.Item className='dropitem' href="#/action-3">
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                ;
             </ul>
           </nav>
         </header>

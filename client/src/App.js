@@ -9,12 +9,13 @@ import ProductDetails from "./components/products/ProductDetails";
 import AddProduct from "./components/admin/AddProduct";
 import Cart from "./components/cart/Cart";
 import Checkout from "./components/checkout/Checkout";
-import RegisterLogin from "./components/auth/RegisterLogin";
+import Register from "./components/auth/Register";
 import EditProduct from "./components/admin/EditProduct";
 import AdminProductList from './components/admin/AdminProductList';
 import AdminProductDetails from './components/admin/AdminProductDetails';
 import Orders from "./components/admin/Orders";
 import NotFound from "./components/notfound/NotFound";
+import Login from "./components/auth/Login";
 
 class App extends Component {
   render() {
@@ -27,7 +28,8 @@ class App extends Component {
             <Route exact path="/"/>
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
-            <Route path="/register_login" component={RegisterLogin} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
             <Route path="/product/:_id" component={ProductDetails} />
             <Route path="/admin/product/:_id" component={AdminProductDetails} />
             <Route path="/products" component={ProductList} />

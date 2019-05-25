@@ -12,7 +12,7 @@ const app = express();
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
 
-app.use(cors());
+app.use(cors());  
 
 // Connect to database
 const dbRoute = `mongodb://${process.env.dbName}:${
