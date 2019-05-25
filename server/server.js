@@ -7,10 +7,17 @@ const logger = require("morgan");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
 var cors = require("cors");
-const Product = require("./models/product");
 const app = express();
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
+
+//  Models
+const Product = require("./models/product");
+const User = require("./models/user");
+
+// Middlewares
+const { auth } = require('./middlewares/auth');
+const { admin } = require('./middlewares/admin');
 
 app.use(cors());  
 
@@ -43,6 +50,11 @@ router.get("/getproduct", (req, res) => {
   });
   console.log();
 });
+
+
+  /***************************************
+ //      Products                      //
+ **************************************/
 
 // this our get method for a single applicant this method fetches a single data object by id from the database.
 router.get("/getproduct/:id", (req, res) => {
@@ -128,6 +140,70 @@ router.delete("/deleteproduct/:id", (req, res) => {
     return res.status(200).send(response);
   });
 });
+
+
+
+  /***************************************
+ //      Users                         //
+ **************************************/
+
+router.get('/auth', auth, (req, res)=>{
+  res.status(200).json({
+      isAdmin: req.user.role === 0 ? false : true,
+      isAuth: true,
+      email: req.user.email,
+      firstname: req.user.name,
+      lastname: req.user.lastname,
+      phoneNumber: req.user.phoneNumber,
+      role: req.user.role,
+      cart: req.user.cart,
+      history: req.user.history
+  })
+})
+
+
+ router.post("/register", (req, res) => {
+    const user = new User(req.body);
+    user.save((err, doc) => {
+      if(err) return res.json({success: false, err});
+      res.status(200).json({
+        success: true,
+        userData: doc
+      })
+    })
+ });
+
+ router.post('/login', (req, res)=>{
+  //Find the email
+  User.findOne({'email': req.body.email},(err, user)=>{
+      if(!user) return res.json({loginSuccess: false, message:'Auth failed, email not found'});
+
+      //Grab the password and check
+      user.comparePassword(req.body.password, (err, isMatch)=>{
+          if(!isMatch) return res.json({loginSuccess: false, message: 'Wrong Password or Email'});
+         
+          //Generate a new token
+          user.generateToken((err, user)=>{
+              if(err) return res.status(400).send(err);
+              res.cookie('w_auth',user.token).status(200).json({loginSuccess: true})
+          })
+      })
+  })    
+});
+
+router.get('/logout', auth,(req, res)=>{
+  User.findOneAndUpdate(
+      {_id: req.user._id},
+      {token: ''},
+      (err, doc)=>{
+          if(err) return res.json({success: false, err});
+          return res.status(200).send({
+              success: true
+          })
+      }
+      )
+})
+
 
 // append /api for our http requests
 app.use("/api", router);
