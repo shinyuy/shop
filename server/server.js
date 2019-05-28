@@ -7,7 +7,7 @@ const logger = require("morgan");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
 var cors = require("cors");
-const app = express();
+const app = express();     
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
 
@@ -136,7 +136,7 @@ router.delete("/deleteproduct/:id", (req, res) => {
     const response = {
       message: "Product successfully deleted",
       id: data._id
-    };
+    };  
     return res.status(200).send(response);
   });
 });
@@ -158,7 +158,7 @@ router.get('/auth', auth, (req, res)=>{
       role: req.user.role,
       cart: req.user.cart,
       history: req.user.history
-  })
+  }) 
 })
 
 
@@ -170,8 +170,8 @@ router.get('/auth', auth, (req, res)=>{
        success: true,
        userData: doc
      });
-   }); 
- });
+   });           
+ }); 
 
  router.post('/login', (req, res)=>{
   //Find the email
@@ -191,7 +191,7 @@ router.get('/auth', auth, (req, res)=>{
   })    
 });
 
-router.get('/logout', auth,(req, res)=>{
+router.get('/logout', auth,(req, res)=>{ 
   User.findOneAndUpdate(
       {_id: req.user._id},
       {token: ''},

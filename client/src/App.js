@@ -1,47 +1,67 @@
 import React, { Component } from "react";
 import "./App.css";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
 import ProductList from "./components/products/ProductList";
-import Home from "./components/home/Home";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import ProductDetails from "./components/products/ProductDetails";
 import AddProduct from "./components/admin/AddProduct";
 import Cart from "./components/cart/Cart";
 import Checkout from "./components/checkout/Checkout";
 import Register from "./components/auth/Register";
 import EditProduct from "./components/admin/EditProduct";
-import AdminProductList from './components/admin/AdminProductList';
-import AdminProductDetails from './components/admin/AdminProductDetails';
+import AdminProductList from "./components/admin/AdminProductList";
+import AdminProductDetails from "./components/admin/AdminProductDetails";
 import Orders from "./components/admin/Orders";
 import NotFound from "./components/notfound/NotFound";
 import Login from "./components/auth/Login";
+import UserDashboard from "./components/user/index";
+import Auth from "./HOC/Auth";
+import Layout from "./HOC/Layout";
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <Navbar />
-          <Home />
-          <Switch>
-            <Route exact path="/"/>
-            <Route path="/cart" component={Cart} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/product/:_id" component={ProductDetails} />
-            <Route path="/admin/product/:_id" component={AdminProductDetails} />
-            <Route path="/products" component={ProductList} />
-            <Route path="/admin/products" component={AdminProductList} />
-            <Route path="/admin/addproduct" component={AddProduct} />
-            <Route path="/admin/editproduct/:_id" component={EditProduct} />
-            <Route path="/admin/orders" component={Orders} />
-            <Route component={NotFound} />
-          </Switch>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <Layout>
+        <Switch>
+          <Route exact path="/"  component={Auth(ProductList, null)} />
+          <Route
+            path="/user/dashboard"
+            exact
+            component={Auth(UserDashboard, true)}
+          />
+          <Route path="/cart" exact component={Auth(Cart, true)} />
+          <Route path="/checkout" exact component={Auth(Checkout, true)} />
+          <Route path="/register" exact component={Auth(Register, false)} />
+          <Route path="/login" exact component={Auth(Login, false)} />
+          <Route
+            path="/product/:_id"
+            exact
+            component={Auth(ProductDetails, null)}
+          />
+          <Route
+            path="/admin/product/:_id"
+            exact
+            component={Auth(AdminProductDetails, true)}
+          />
+          <Route path="/products" exact component={Auth(ProductList, null)} />
+          <Route
+            path="/admin/products"
+            exact
+            component={Auth(AdminProductList, true)}
+          />
+          <Route
+            path="/admin/addproduct"
+            exact
+            component={Auth(AddProduct, true)}
+          />
+          <Route
+            path="/admin/editproduct/:_id"
+            exact
+            component={Auth(EditProduct, true)}
+          />
+          <Route path="/admin/orders" exact component={Auth(Orders, true)} />
+          <Route component={Auth(NotFound, null)} />
+        </Switch>
+      </Layout>
     );
   }
 }

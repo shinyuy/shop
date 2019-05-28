@@ -14,13 +14,13 @@ export default class Register extends Component {
 
   register = (email, password) => {
     axios
-      .post("http://localhost:8000/api/login", {
+      .post("http://localhost:3000/api/login", {
         email: this.state.email,
         password: this.state.password
       })
       .then(res => {
-          if(res.loginSuccess === true){
-               this.props.history.push('/products')
+          if(res.data.loginSuccess){
+               this.props.history.push('/user/dashboard')
           }else{
               this.setState({
                   errorMessage: true
@@ -59,7 +59,7 @@ export default class Register extends Component {
           <Row>
             <Col />
             <Col>
-              <h3>Not registered ? Register!</h3>
+              <h3>Login !</h3>
             </Col>
             <Col />
           </Row>

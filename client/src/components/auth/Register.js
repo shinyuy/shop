@@ -33,7 +33,10 @@ export default class Register extends Component {
             phoneNumber: "",
             password: "",
             success: true
-          });
+          })
+          setTimeout(() => {
+            this.props.history.push('/login');
+          }, 2000);
       })
       .catch(error => {
         console.log(error);
