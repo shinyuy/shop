@@ -6,7 +6,7 @@ import Navbar from "../components/layout/Navbar";
 import Home from "../components/home/Home";
 import Footer from "../components/layout/Footer";
 
-export default function(ComposedClass, reload, adminRoute = null) {
+export default function(ComposedClass, reload, adminRoute) {
   class AuthCheck extends Component {
     state = {
       loading: true,
@@ -47,9 +47,9 @@ export default function(ComposedClass, reload, adminRoute = null) {
       return (
         <>
           <Navbar {...this.props} user={this.state.user} />
-          <Home />
+          <Home/>
           <ComposedClass {...this.props} user={this.state.user} />
-          <Footer />
+          <Footer/>
         </>
       );
     }

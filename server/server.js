@@ -191,7 +191,7 @@ router.get('/auth', auth, (req, res)=>{
   })    
 }); 
 
-router.get('/logout', auth,(req, res)=>{ 
+router.get('/logout', auth,(req, res)=>{  
   User.findOneAndUpdate(
       {_id: req.user._id},
       {token: ''},

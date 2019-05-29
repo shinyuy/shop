@@ -5,7 +5,7 @@ import '../../HOC/userlayout.css';
 
 function UserDashboard({user}) {
   return (
-    <UserLayout>
+    <UserLayout user={user}>
       <div className='user_nfo_panel'>
           <h1> User Information</h1>
           <div>

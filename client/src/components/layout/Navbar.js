@@ -17,9 +17,9 @@ class Navbar extends Component {
         linkTo: "/products",
         public: true
       }
-    ], 
+    ],
     user: [
-       {
+      {
         name: "My Cart",
         linkTo: "/cart",
         public: false
@@ -35,25 +35,25 @@ class Navbar extends Component {
         public: true
       },
       {
-        name: "Logout",
+        name: "Log out",
         linkTo: "/login",
         public: false
       }
     ]
   };
-  
+
   logoutHandler = () => {
     axios
-    .get("http://localhost:3000/api/logout")
-    .then(res => {
-       if(res.data.success){
-         this.props.history.push('/')
-       }
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-  }
+      .get("http://localhost:3000/api/logout")
+      .then(res => {
+        if (res.data.success) {
+          this.props.history.push("/");
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
 
   cartLink = (item, i) => {
     const user = this.props.user;
@@ -68,23 +68,22 @@ class Navbar extends Component {
 
   defaultLink = (item, i) =>
     item.name === "Log out" ? (
-      <div
-        className="log_out_link"
-        key={i}
-        onClick={() => this.logoutHandler()}
-      >
-        {item.name}
-      </div>
+      <li key={i}
+        className="main-header__item"
+        >
+          <Link to='' onClick={() => this.logoutHandler()}>
+          {item.name}
+          </Link> 
+      </li>
     ) : (
       <li className="main-header__item">
-      <Link to={item.linkTo} key={i}>
-        {item.name}
-      </Link>
+        <Link to={item.linkTo} key={i}>
+          {item.name}
+        </Link>
       </li>
     );
 
   showLinks = type => {
-    console.log(this.props)
     let list = [];
     if (this.props.user) {
       type.forEach(item => {
@@ -92,7 +91,7 @@ class Navbar extends Component {
           if (item.public === true) {
             list.push(item);
           }
-        } else {
+        }else {
           if (item.name !== "Login/Register") {
             list.push(item);
           }
@@ -110,15 +109,13 @@ class Navbar extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="main-nav">
         <header className="main-header">
           <nav className="main-header__nav">
             <ul className="main-header__item-list">
-                  {this.showLinks(this.state.page)}
-                  {this.showLinks(this.state.user)}
-              
+              {this.showLinks(this.state.page)}
+              {this.showLinks(this.state.user)}
               <Dropdown>
                 <Dropdown.Toggle variant="warning" id="dropdown-basic">
                   Categories
@@ -137,7 +134,7 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
               ;
-              </ul>
+            </ul>
           </nav>
         </header>
       </div>
