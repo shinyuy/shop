@@ -1,74 +1,148 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import "./layout.css";
+import axios from "axios";
 
-export default class Navbar extends Component {
+class Navbar extends Component {
+  state = {
+    page: [
+      {
+        name: "Home",
+        linkTo: "/",
+        public: true
+      },
+      {
+        name: "Products",
+        linkTo: "/products",
+        public: true
+      }
+    ], 
+    user: [
+       {
+        name: "My Cart",
+        linkTo: "/cart",
+        public: false
+      },
+      {
+        name: "My Account",
+        linkTo: "/user/dashboard",
+        public: false
+      },
+      {
+        name: "Login/Register",
+        linkTo: "/login",
+        public: true
+      },
+      {
+        name: "Logout",
+        linkTo: "/login",
+        public: false
+      }
+    ]
+  };
+  
+  logoutHandler = () => {
+    axios
+    .get("http://localhost:3000/api/logout")
+    .then(res => {
+       if(res.data.success){
+         this.props.history.push('/')
+       }
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  }
+
+  cartLink = (item, i) => {
+    const user = this.props.user;
+
+    return (
+      <div className="" key={i}>
+        <span>{user.cart ? user.cart.length : 0}</span>
+        <Link to={item.linkTo}>{item.name}</Link>
+      </div>
+    );
+  };
+
+  defaultLink = (item, i) =>
+    item.name === "Log out" ? (
+      <div
+        className="log_out_link"
+        key={i}
+        onClick={() => this.logoutHandler()}
+      >
+        {item.name}
+      </div>
+    ) : (
+      <li className="main-header__item">
+      <Link to={item.linkTo} key={i}>
+        {item.name}
+      </Link>
+      </li>
+    );
+
+  showLinks = type => {
+    console.log(this.props)
+    let list = [];
+    if (this.props.user) {
+      type.forEach(item => {
+        if (!this.props.user.isAuth) {
+          if (item.public === true) {
+            list.push(item);
+          }
+        } else {
+          if (item.name !== "Login/Register") {
+            list.push(item);
+          }
+        }
+      });
+    }
+
+    return list.map((item, i) => {
+      if (item.name !== "My Cart") {
+        return this.defaultLink(item, i);
+      } else {
+        return this.cartLink(item, i);
+      }
+    });
+  };
+
   render() {
+    console.log(this.props);
     return (
       <div className="main-nav">
         <header className="main-header">
           <nav className="main-header__nav">
             <ul className="main-header__item-list">
-              <li className="main-header__item">
-                <Link className="" to="/">
-                  Shop
-                </Link>
-              </li>
-              <li className="main-header__item">
-                <Link className="" to="/products">
-                  Products
-                </Link>
-              </li>
-              <li className="main-header__item">
-                <Link className="" to="/cart">
-                  Cart
-                </Link>
-              </li>
-              <li className="main-header__item">
-                <Link className="" to="/admin/orders">
-                  Orders
-                </Link>
-              </li>
+                  {this.showLinks(this.state.page)}
+                  {this.showLinks(this.state.user)}
+              
               <Dropdown>
-                  <Dropdown.Toggle variant="warning" id="dropdown-basic">
-                    Categories
-                  </Dropdown.Toggle>
+                <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                  Categories
+                </Dropdown.Toggle>
 
-                  <Dropdown.Menu className='drop'>
-                    <Dropdown.Item className='dropitem' href="#/action-1">Men</Dropdown.Item>
-                    <Dropdown.Item className='dropitem' href="#/action-2">
-                      Women
-                    </Dropdown.Item>
-                    <Dropdown.Item className='dropitem' href="#/action-3">
-                      Children
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                ; 
-              <li className="main-header__item">
-                <Link className="" to="/admin/addproduct">
-                  Admin Products
-                </Link>
-              </li>
-              <Dropdown style={{marginLeft: '20rem'}}>
-                  <Dropdown.Toggle variant="warning" id="dropdown-basic">
-                    Register/Login
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu className='drop'>
-                    <Dropdown.Item className='dropitem' href="/login">Login</Dropdown.Item>
-                    <Dropdown.Item className='dropitem' href="/register">Register</Dropdown.Item>
-                    <Dropdown.Item className='dropitem'>
-                      Logout
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                ;
-            </ul>
+                <Dropdown.Menu className="drop">
+                  <Dropdown.Item className="dropitem" href="#/action-1">
+                    Men
+                  </Dropdown.Item>
+                  <Dropdown.Item className="dropitem" href="#/action-2">
+                    Women
+                  </Dropdown.Item>
+                  <Dropdown.Item className="dropitem" href="#/action-3">
+                    Children
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              ;
+              </ul>
           </nav>
         </header>
       </div>
     );
   }
 }
+
+export default withRouter(Navbar);

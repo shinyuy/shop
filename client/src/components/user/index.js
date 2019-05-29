@@ -3,7 +3,7 @@ import UserLayout from '../../HOC/UserLayout';
 import { Link } from 'react-router-dom';
 import '../../HOC/userlayout.css';
 
-function UserDashboard(user) {
+function UserDashboard({user}) {
   return (
     <UserLayout>
       <div className='user_nfo_panel'>

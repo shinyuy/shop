@@ -25,7 +25,6 @@ export default class ProductDetails extends Component {
   
 
   render() {
-
     const data = this.state.data ? (
       <div>
       <Card style={{ width: "50rem", maxHeight: '60rem', margin: "50px" }}>

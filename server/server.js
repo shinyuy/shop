@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
-var cors = require("cors");
+var cors = require("cors");  
 const app = express();     
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
@@ -152,7 +152,7 @@ router.get('/auth', auth, (req, res)=>{
       isAdmin: req.user.role === 0 ? false : true,
       isAuth: true,
       email: req.user.email,
-      firstname: req.user.name,
+      firstname: req.user.firstname,
       lastname: req.user.lastname,
       phoneNumber: req.user.phoneNumber,
       role: req.user.role,
@@ -189,7 +189,7 @@ router.get('/auth', auth, (req, res)=>{
           })
       })
   })    
-});
+}); 
 
 router.get('/logout', auth,(req, res)=>{ 
   User.findOneAndUpdate(
