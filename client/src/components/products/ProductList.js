@@ -46,7 +46,16 @@ export default class ProductList extends Component {
       });
   };
 
+  
+  addToCart = (dat) => {
+     let _id = dat._id
+    console.log(_id)
+     axios.post(`http://localhost:3000/api/addToCart?productId=${_id}`)
+     .then(res => {console.log(res.data)})
+  };
+
   render() {
+    console.log(this.props.user.isAuth)
     const { data } = this.state;
     return (
       <div>
@@ -72,12 +81,17 @@ export default class ProductList extends Component {
                           {dat.description} 
                         </Card.Text>
                         <Button variant="primary" style={{marginRight: '4px'}}><Link to={'/product/' + dat._id}>Details</Link></Button>
-                        <Button variant="primary">Add to Cart</Button>
+                        <Button variant="primary" onClick={
+                          this.props.user.isAuth ? 
+                          ()=> this.addToCart(dat)
+                           :
+                           console.log('Not authenticated')
+                        }>Add to Cart</Button>
                       </Card.Body>
                     </Card>
                   </div>
                 );
-              })}
+              }, this)}
         </Row>
       </div>
     );

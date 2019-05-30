@@ -59,8 +59,8 @@ class Navbar extends Component {
     const user = this.props.user;
 
     return (
-      <div className="" key={i}>
-        <span>{user.cart ? user.cart.length : 0}</span>
+      <div  key={i}>
+        <span style={{color: 'white'}}>{user.cart ? user.cart[0].quantity : 0}</span>
         <Link to={item.linkTo}>{item.name}</Link>
       </div>
     );
@@ -109,6 +109,7 @@ class Navbar extends Component {
   };
 
   render() {
+    console.log(this.props)
     return (
       <div className="main-nav">
         <header className="main-header">

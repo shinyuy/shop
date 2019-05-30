@@ -10,7 +10,7 @@ var cors = require("cors");
 const app = express();     
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
-
+   
 //  Models
 const Product = require("./models/product");
 const User = require("./models/user");
@@ -170,39 +170,86 @@ router.get('/auth', auth, (req, res)=>{
        success: true,
        userData: doc
      });
-   });           
- }); 
+   });
+ });
 
- router.post('/login', (req, res)=>{
-  //Find the email
-  User.findOne({'email': req.body.email},(err, user)=>{
-      if(!user) return res.json({loginSuccess: false, message:'Auth failed, email not found'});
+ router.post("/login", (req, res) => {
+   //Find the email
+   User.findOne({ email: req.body.email }, (err, user) => {
+     if (!user)
+       return res.json({
+         loginSuccess: false,
+         message: "Auth failed, email not found"
+       });
 
-      //Grab the password and check
-      user.comparePassword(req.body.password, (err, isMatch)=>{
-          if(!isMatch) return res.json({loginSuccess: false, message: 'Wrong Password or Email'});
-         
-          //Generate a new token
-          user.generateToken((err, user)=>{
-              if(err) return res.status(400).send(err);
-              res.cookie('w_auth',user.token).status(200).json({loginSuccess: true})
-          })
-      })
-  })    
-}); 
+     //Grab the password and check
+     user.comparePassword(req.body.password, (err, isMatch) => {
+       if (!isMatch)
+         return res.json({
+           loginSuccess: false,
+           message: "Wrong Password or Email"
+         });
 
-router.get('/logout', auth,(req, res)=>{  
-  User.findOneAndUpdate(
-      {_id: req.user._id},
-      {token: ''},
-      (err, doc)=>{
-          if(err) return res.json({success: false, err});
-          return res.status(200).send({
-              success: true
-          })
-      }
-      )
-})
+       //Generate a new token
+       user.generateToken((err, user) => {
+         if (err) return res.status(400).send(err);
+         res
+           .cookie("w_auth", user.token)
+           .status(200)
+           .json({ loginSuccess: true });
+       });
+     });
+   });
+ });  
+
+ router.get("/logout", auth, (req, res) => {
+   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
+     if (err) return res.json({ success: false, err });
+     return res.status(200).send({
+       success: true
+     });
+   });
+ });
+
+ router.post("/addToCart", auth, (req, res) => {
+   User.findOne({ _id: req.user._id }, (err, doc) => {
+     let duplicate = false;
+     doc.cart.forEach(item => {
+       if (item.id == req.query.productId) {
+         duplicate = true;
+       }
+     });
+     if (duplicate) {
+       User.findOneAndUpdate(
+         {_id: req.user._id ,'cart.id': mongoose.Types.ObjectId(req.query.productId)},
+         {$inc: {'cart.$.quantity':1}},
+         {new:true},
+         () => {
+           if(err) return res.json({success: false, err});
+           res.status(200).json(doc.cart)
+         }
+       )
+     } else {
+       User.findOneAndUpdate(
+         { _id: req.user._id },
+         {
+           $push: {
+             cart: {
+               id: mongoose.Types.ObjectId(req.query.productId),
+               quantity: 1,
+               date: Date.now()
+             }
+           }
+         },
+         { new: true },
+         (err, doc) => {
+           if (err) return res.json({ success: false, err });
+           res.status(200).json(doc.cart);
+         }
+       );
+     }
+   });
+ });
 
 
 // append /api for our http requests
