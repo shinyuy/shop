@@ -9,7 +9,7 @@ export default class ProductDetails extends Component {
 
   state = {
     data: null
-  }
+  } 
 
   componentDidMount() {
     let id = this.props.match.params._id;
@@ -18,10 +18,15 @@ export default class ProductDetails extends Component {
         this.setState({
           data: res.data
         })
-        console.log(this.state.data)
       });
   }
 
+  addToCart = () => {
+    let _id = this.props.match.params._id;
+   console.log(_id)
+    axios.post(`http://localhost:3000/api/addToCart?productId=${_id}`)
+    .then(res => {console.log(res.data)})
+ };
   
 
   render() {
@@ -41,7 +46,16 @@ export default class ProductDetails extends Component {
                  <h5>Category: {this.state.data.data.categories}</h5>
                  <h5>Designer: Gucci</h5>
                </Card.Text>
-                <Button variant="primary" style={{ marginRight: '2rem'}}>Add to Cart</Button>
+                <Button 
+                variant="primary" 
+                style={{ marginRight: '2rem'}}
+                onClick={
+                  this.props.user.isAuth ? 
+                   this.addToCart
+                   :
+                   console.log('Not authenticated')
+                }
+                >Add to Cart</Button>
                 <Button variant="primary">Remove from Cart</Button>
              </Card.Body>
            </Col>

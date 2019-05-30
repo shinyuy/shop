@@ -60,8 +60,8 @@ class Navbar extends Component {
 
     return (
       <div  key={i}>
-        <span style={{color: 'white'}}>{user.cart ? user.cart[0].quantity : 0}</span>
         <Link to={item.linkTo}>{item.name}</Link>
+        <span style={{color: 'white', marginLeft:'4px'}}>{user.cart ? user.cart[0].quantity : 0}</span>
       </div>
     );
   };
