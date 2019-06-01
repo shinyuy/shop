@@ -11,7 +11,7 @@ const app = express();
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
    
-//  Models
+//  Models 
 const Product = require("./models/product");
 const User = require("./models/user");
 
@@ -19,7 +19,7 @@ const User = require("./models/user");
 const { auth } = require('./middlewares/auth');
 const { admin } = require('./middlewares/admin');
 
-app.use(cors());  
+app.use(cors());      
 
 // Connect to database
 const dbRoute = `mongodb://${process.env.dbName}:${
@@ -138,8 +138,26 @@ router.delete("/deleteproduct/:id", (req, res) => {
       id: data._id
     };  
     return res.status(200).send(response);
-  });
+  }); 
 });
+
+router.get('/cart/products_by_id', (req, res)=>{
+  let type = req.query.type;
+  let items = req.query.id;
+
+  if(type === 'array'){
+    let ids= req.query.id.split(','); 
+    items = [];
+    items = ids.map(item=> {
+      return mongoose.Types.ObjectId(item)
+    })
+  }
+
+  Product.find({ '_id':{$in:items}})
+  .exec((err,docs)=>{
+      return res.status(200).send(docs)
+  })
+})
 
 
 

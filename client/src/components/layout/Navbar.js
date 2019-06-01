@@ -61,7 +61,7 @@ class Navbar extends Component {
     return (
       <div  key={i}>
         <Link to={item.linkTo}>{item.name}</Link>
-        <span style={{color: 'white', marginLeft:'4px'}}>{user.cart ? user.cart[0].quantity : 0}</span>
+        <span style={{color: 'white', marginLeft:'4px'}}>{user.cart ? user.cart.length : 0}</span>
       </div>
     );
   };
@@ -109,7 +109,6 @@ class Navbar extends Component {
   };
 
   render() {
-    console.log(this.props)
     return (
       <div className="main-nav">
         <header className="main-header">

@@ -4,7 +4,7 @@ import ProductList from "./components/products/ProductList";
 import { Route, Switch } from "react-router-dom";
 import ProductDetails from "./components/products/ProductDetails";
 import AddProduct from "./components/admin/AddProduct";
-import Cart from "./components/cart/Cart";
+import Cart from "./components/user/Cart";
 import Checkout from "./components/checkout/Checkout";
 import Register from "./components/auth/Register";
 import EditProduct from "./components/admin/EditProduct";
@@ -28,7 +28,7 @@ class App extends Component {
             exact
             component={Auth(UserDashboard, true, false)}
           />
-          <Route path="/cart" exact component={Auth(Cart, true, false)} />
+          <Route path="/user/cart" exact component={Auth(Cart, true, false)} />
           <Route path="/checkout" exact component={Auth(Checkout, true, false)} />
           <Route path="/register" exact component={Auth(Register, false, false)} />
           <Route path="/login" exact component={Auth(Login, false, false)} />
