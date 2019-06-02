@@ -36,17 +36,40 @@ export default class Cart extends Component {
                 }
               });
             });
-           
+
+            console.log(res.data);
             this.setState({
               user: res.data
             });
-           
+
+            if (user.cart.length > 0) {
+              this.calculateTotal(user);
+            }
           });
       }
     }
   }
 
-  
+  calculateTotal = state => {
+    console.log(this.state.user);
+    let total = 0;
+
+    this.state.user.forEach(item => {
+      total += parseInt(item.price, 10) * item.quantity;
+    });
+
+    this.setState({
+      total,
+      showTotal: true
+    });
+  };
+
+  showNoItemMessage = () => (
+    <div className="cart_no_items">
+      <FontAwesomeIcon icon={faFrown} />
+      <div>You have no items</div>
+    </div>
+  );
 
   render() {
     return (
@@ -59,7 +82,21 @@ export default class Cart extends Component {
               type="cart"
               removeItem={id => this.removeFromCart(id)}
             />
-           
+            {this.state.showTotal ? (
+              <div>
+                <div className="user_cart_sum">
+                  <div>Total amount: $ {this.state.total}</div>
+                </div>
+              </div>
+            ) : this.state.showSuccess ? (
+              <div className="cart_success">
+                <FontAwesomeIcon icon={faSmile} />
+                <div>THANK YOU</div>
+                <div>YOUR ORDER IS NOW COMPLETE</div>
+              </div>
+            ) : (
+              this.showNoItemMessage()
+            )}
           </div>
         </div>
       </UserLayout>

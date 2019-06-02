@@ -146,7 +146,7 @@ router.get('/cart/products_by_id', (req, res)=>{
   let items = req.query.id;
 
   if(type === 'array'){
-    let ids= req.query.id.split(','); 
+    let ids= req.query.id.split(',');   
     items = [];
     items = ids.map(item=> {
       return mongoose.Types.ObjectId(item)

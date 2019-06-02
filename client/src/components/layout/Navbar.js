@@ -21,7 +21,7 @@ class Navbar extends Component {
     user: [
       {
         name: "My Cart",
-        linkTo: "/cart",
+        linkTo: "/user/cart",
         public: false
       },
       {
