@@ -71,6 +71,30 @@ export default class Cart extends Component {
     </div>
   );
 
+  removeFromCart = (id) => {
+    let user = this.props.user;
+    axios.get(`http://localhost:3000/api/removeFromCart?_id=${id}`)
+    .then(res => {
+      user.cart.forEach(item=>{
+          user.cart.forEach((k,i)=>{
+              if(item.id === k._id){
+                  user.cart[i].quantity = item.quantity;
+              }
+          })
+      })
+         return res.data;
+   })
+   .then(()=>{
+    if(user.cart.length <= 0){
+        this.setState({
+            showTotal: false
+        })
+    } else{
+        this.calculateTotal(user)
+    }
+})
+}
+
   render() {
     return (
       <UserLayout user={this.props.user}>

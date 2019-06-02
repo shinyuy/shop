@@ -269,6 +269,32 @@ router.get('/auth', auth, (req, res)=>{
    });
  });
 
+ router.get('/removeFromCart',auth,(req,res)=>{
+
+  User.findOneAndUpdate(
+      {_id: req.user._id },
+      { "$pull":
+          { "cart": {"id":mongoose.Types.ObjectId(req.query._id)} }
+      },
+      { new: true },
+      (err,doc)=>{
+          let cart = doc.cart;
+          let array = cart.map(item=>{
+              return mongoose.Types.ObjectId(item.id)
+          });
+
+          Product.
+          find({'_id':{ $in: array }}).
+          exec((err,cartDetail)=>{
+              return res.status(200).json({
+                  cartDetail,
+                  cart
+              })
+          })
+      }
+  );
+})
+
 
 // append /api for our http requests
 app.use("/api", router);
