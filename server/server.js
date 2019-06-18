@@ -19,7 +19,7 @@ const User = require("./models/user");
 const { auth } = require('./middlewares/auth');
 const { admin } = require('./middlewares/admin');
 
-app.use(cors());      
+app.use(cors());         
 
 // Connect to database
 const dbRoute = `mongodb://${process.env.dbName}:${
@@ -63,7 +63,7 @@ router.get("/getproduct/:id", (req, res) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
-});
+});  
 
 router.post("/updateproduct/:id", (req, res) => {
   let id = req.params.id;
@@ -160,7 +160,6 @@ router.get('/cart/products_by_id', (req, res)=>{
 })
 
 
-
   /***************************************
  //      Users                         //
  **************************************/
@@ -250,8 +249,8 @@ router.get('/auth', auth, (req, res)=>{
      } else {
        User.findOneAndUpdate(
          { _id: req.user._id },
-         {
-           $push: {
+         {   
+           $push: {           
              cart: {
                id: mongoose.Types.ObjectId(req.query.productId),
                quantity: 1,
@@ -267,7 +266,7 @@ router.get('/auth', auth, (req, res)=>{
        );
      }
    });
- });
+ });  
 
  router.get('/removeFromCart',auth,(req,res)=>{
 

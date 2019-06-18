@@ -14,7 +14,6 @@ function ProductBlock(props) {
     }
 
     const renderItems = () => (
-        
         products ? 
         products.map(product=>(
             <div className='user_product_block' key={product._id}>

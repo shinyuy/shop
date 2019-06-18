@@ -56,7 +56,6 @@ export default class ProductDetails extends Component {
                    console.log('Not authenticated')
                 }
                 >Add to Cart</Button>
-                <Button variant="primary">Remove from Cart</Button>
              </Card.Body>
            </Col>
          </Row>

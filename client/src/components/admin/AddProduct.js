@@ -50,9 +50,11 @@ export default class AddProduct extends Component {
   };
 
   handleChange = e => {
+    
     this.setState({
       [e.target.id]: e.target.value
     });
+    console.log(this.state)
   };
 
   handleSubmit = e => {
@@ -116,20 +118,21 @@ export default class AddProduct extends Component {
           </Row>
           <Row>
             <Col>
-              <label htmlFor="">Product Category</label>
-              <input
+              <label htmlFor="categories">Product Category</label>
+              <select
                 className="form-control"
-                type="text"
-                value={categories}
+                value={categories.option}
+                onChange={this.handleChange}
                 id="categories"
                 name="categories"
-                onChange={this.handleChange}
                 required
-                placeholder="Enter Product Categories"
-              />
+              >
+                <option>Men</option>
+                <option>Women</option>
+                <option>Children</option>
+              </select>
             </Col>
           </Row>
-
           <label htmlFor="message">Product Description</label>
           <textarea
             className="form-control"

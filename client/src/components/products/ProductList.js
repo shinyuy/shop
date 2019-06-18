@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from 'react-router-dom';
@@ -15,7 +14,8 @@ export default class ProductList extends Component {
     intervalIsSet: false,
     idToDelete: null,
     idToUpdate: null,
-    objectToUpdate: null
+    objectToUpdate: null,
+    addSuccessStatus: false
   };
 
   componentDidMount() {
@@ -51,28 +51,25 @@ export default class ProductList extends Component {
      let _id = dat._id
     console.log(_id)
      axios.post(`http://localhost:3000/api/addToCart?productId=${_id}`)
-     .then(res => {console.log(res.data)})
+     .then(res => {
+       this.setState({
+         addSuccessStatus: true
+       })
+     })
   };
 
   render() {
-    console.log(this.props.user.isAuth)
+    console.log(this.props)
     const { data } = this.state;
     return (
-      <div>
-        <Row>
+      <div className='products'>
           {data.length <= 0
             ? `Loading Products...`
             : data.data.map(function(dat, i) {
                 return (
                   <div key={i}>
-                    <Card
-                      style={{
-                        width: "18rem",
-                        maxHeight: "70rem",
-                        margin: "50px"
-                      }}
-                    >
-                      <Card.Img variant="top" src={dat.images[0].url} />
+                    <Card className='product-card'>
+                      <Card.Img variant="top" src={dat.images[0].url} style={{height: '400px'}} />
                       <Card.Body>
                         <Card.Title>{dat.title}</Card.Title>
                         <Card.Text>
@@ -89,10 +86,10 @@ export default class ProductList extends Component {
                         }>Add to Cart</Button>
                       </Card.Body>
                     </Card>
+                  {this.state.addSuccessStatus === true? alert('Item added successfully'): ''}
                   </div>
                 );
               }, this)}
-        </Row>
       </div>
     );
   }

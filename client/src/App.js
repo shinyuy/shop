@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import ProductList from "./components/products/ProductList";
 import { Route, Switch } from "react-router-dom";
 import ProductDetails from "./components/products/ProductDetails";

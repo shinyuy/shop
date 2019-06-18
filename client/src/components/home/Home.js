@@ -8,13 +8,13 @@ function Home(props) {
   return (
     <div>
       <Jumbotron className="home" style={{backgroundImage: `url(${girl})`}}>
-        <h1>Hello, world!</h1>
+        <h1>Welcome!</h1>
         <p>
           This is a simple hero unit, a simple jumbotron-style component for<br/>
           calling extra attention to featured content or information.
         </p>
         <p>
-          <Button variant="primary">Learn more</Button>
+          <Button variant="primary">Shop</Button>
         </p>
       </Jumbotron>
     </div>

@@ -110,14 +110,13 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div className="main-nav">
         <header className="main-header">
           <nav className="main-header__nav">
             <ul className="main-header__item-list">
               {this.showLinks(this.state.page)}
               {this.showLinks(this.state.user)}
               <Dropdown>
-                <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                <Dropdown.Toggle variant="warning" id="dropdown-basic" >
                   Categories
                 </Dropdown.Toggle>
 
@@ -133,11 +132,10 @@ class Navbar extends Component {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              ;
+              
             </ul>
           </nav>
         </header>
-      </div>
     );
   }
 }
